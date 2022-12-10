@@ -240,7 +240,7 @@
  <div class="center middle"><div style="width:100%"><div>
 <h1 class=" text-2xl mt-2 font-sans">CSAPP 讨论会</h1>
 <p class=" font-serif my-1">Week3 异常控制流<br/>
-2022/12/9</p>
+2022/12/10</p>
 </div> 
 </div> 
 </div> 
@@ -271,14 +271,12 @@
 <section> <div>
 <h2 class=" text-xl mt-2 pb-2 font-sans">进程 API</h2>
 <ul class=" list-disc font-serif">
-<li class=" ml-8">进程的创建<ul class=" list-disc font-serif">
-<li class=" ml-8">fork/execve (*NIX)</li>
+<li class=" ml-8">进程的创建 fork/execve (*NIX)<ul class=" list-disc font-serif">
+<li class=" ml-8">fork(ppt P.29): 复制一份数据</li>
+<li class=" ml-8">execve(ppt P.50): 只是清空内存空间, 载入新文件执行 </li>
 </ul>
 </li>
-<li class=" ml-8">进程的销毁<ul class=" list-disc font-serif">
-<li class=" ml-8">exit (*NIX)</li>
-</ul>
-</li>
+<li class=" ml-8">进程的销毁 exit (*NIX)</li>
 <li class=" ml-8">与 OS 交互<ul class=" list-disc font-serif">
 <li class=" ml-8">syscall </li>
 <li class=" ml-8"><code>ausyscall --dump | less</code></li>
@@ -289,6 +287,10 @@
 </ul>
 </li>
 </ul>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code>$ gcc fork_printf.c -o fork_printf
+$ ./fork_printf <span class="p">|</span> sed <span class="s2">"s/o/o\n/g"</span> <span class="p">|</span> wc -l
+</code></pre></div>
+
 </div> </section>
 
 <section> <div>
@@ -306,11 +308,11 @@
 </div> </section>
 
 <section> <div>
-<h2 class=" text-xl mt-2 pb-2 font-sans">那么代价是什么呢？</h2>
+<h2 class=" text-xl mt-2 pb-2 font-sans">那么代价是什么？</h2>
 <ul class=" list-disc font-serif">
 <li class=" ml-8">context switch 的消耗<ul class=" list-disc font-serif">
-<li class=" ml-8">timer interrupt</li>
-<li class=" ml-8">trap (syscall)</li>
+<li class=" ml-8">{IO, timers, .etc} interrupt ----&gt;  libOS</li>
+<li class=" ml-8">trap (syscall)               ----&gt; 合并 syscall</li>
 </ul>
 </li>
 <li class=" ml-8">内核空间与用户之间数据的拷贝<ul class=" list-disc font-serif">
@@ -318,7 +320,10 @@
 <li class=" ml-8">mmap</li>
 </ul>
 </li>
-<li class=" ml-8">miss cache or TLB</li>
+<li class=" ml-8">miss cache or TLB<ul class=" list-disc font-serif">
+<li class=" ml-8">绑核, huge TLB pages</li>
+</ul>
+</li>
 <li class=" ml-8">pagetable consume extra memory</li>
 </ul>
 <div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code>$ gcc sum-atomic.c -lpthread
