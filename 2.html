@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="../static/css/base.css" rel="stylesheet">
-    <link href="http://jyywiki.cn/static/css/tailwind.min.css" rel="stylesheet">
+    <link href="../static/css/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.font.im/css?family=Source+Serif+Pro%7CLato%7CInconsolata" rel="stylesheet"
           type="text/css">
     <title>CSAPP 讨论会</title>
@@ -239,360 +239,275 @@
         <section>
  <div class="center middle"><div style="width:100%"><div>
 <h1 class=" text-2xl mt-2 font-sans">CSAPP 讨论会</h1>
-<p class=" font-serif my-1">Week 2 程序的机器级表示<br/>
-2022/11/12</p>
+<p class=" font-serif my-1">Week 1 信息的表示和处理  </p>
+<p class=" font-serif my-1">2022/10/29</p>
 </div> 
 </div> 
 </div> 
 </section>
 
 <section>
- 
-<section> <div class="center middle"><div style="width:100%"><div>
-<h1 class=" text-2xl mt-2 font-sans">回到过去</h1>
-</div> </div> </div> </section>
-
-<section> <div>
-<h2 class=" text-xl mt-2 pb-2 font-sans">最简单的计算机</h2>
-<p class=" font-serif my-1"><img alt="" class="float-right" src="https://upload.wikimedia.org/wikipedia/commons/d/de/Fetch-Decode-Execute_Cycle.png" width="200px"/></p>
-<p class=" font-serif my-1">CPU 就是一个无情的指令执行机器</p>
-<ol>
-<li class=" ml-8">从PC指示的存储器位置取出指令;</li>
-<li class=" ml-8">执行指令;</li>
-<li class=" ml-8">更新PC;</li>
-<li class=" ml-8">回到 1, 以此往复无限循环</li>
-</ol>
-<p class=" font-serif my-1">如果由我们自己设计指令集<br/>
-我们希望机器提供给我们什么样的 Interface ?</p>
-<p class=" font-serif my-1">机器有如下约定</p>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">信息编码</h2>
+<p class=" font-serif my-1">以何种角度来看待这一串 01 序列</p>
 <ul class=" list-disc font-serif">
-<li class=" ml-8">所有数据和指令都只有<red>一个字节</red></li>
-<li class=" ml-8">所有的计算操作只能在寄存器内部进行</li>
+<li class=" ml-8">symbol_interpret.c</li>
+<li class=" ml-8">数据<ul class=" list-disc font-serif">
+<li class=" ml-8">整数</li>
+<li class=" ml-8">浮点数 </li>
+<li class=" ml-8"><a href="https://www.bilibili.com/video/BV1NF411i7Zh/">自定义解释数据</a></li>
 </ul>
-</div> </section>
+</li>
+<li class=" ml-8">代码<ul class=" list-disc font-serif">
+<li class=" ml-8">attack lab</li>
+<li class=" ml-8">eval 函数</li>
+</ul>
+</li>
+</ul>
+</div> 
+</section>
 
-<section> <div>
-<h2 class=" text-xl mt-2 pb-2 font-sans">机器级别 Interface</h2>
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">信息编码</h2>
 <blockquote>
-<p class=" font-serif my-1"><a href="https://www.cs.unibo.it/~martini/PP/bohm-jac.pdf">所有的程序都可以由顺序、分支、循环三种控制结构组成</a></p>
+<p class=" font-serif my-1">什么是 CPU ?</p>
+</blockquote>
+<p class=" font-serif my-1">尝试这一串 01 进行译码，并根据翻译的信息执行相关操作的机器。从某种意义上讲，CPU 就是一个大号的解释器</p>
+<p class=" font-serif my-1">字节序</p>
+<p class=" font-serif my-1">当使用<red>多字节数据</red>时，以何种方式来解释这些<red>字节序列(byte order)</red><br/>
+不过现在基本没有大端机器，基本只有网络中才需要考虑这个。</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.11">Java big endian (</a><ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://juejin.cn/post/6844903591963000846">读取二进制文件问题</a></li>
+</ul>
+</li>
+<li class=" ml-8">js?   python: int.from_bytes(bytes, byteorder, *, signed=False)</li>
+<li class=" ml-8">utf-8 ：解析是根据一个字节一个字节解析的，所以无</li>
+<li class=" ml-8">utf-16 ：解析是根据两个字节解析的，所以有</li>
+</ul>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">整数表示</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">基于权重的整数表示</li>
+<li class=" ml-8">无符号编码</li>
+<li class=" ml-8">有符号编码<ul class=" list-disc font-serif">
+<li class=" ml-8">补码</li>
+<li class=" ml-8">最高位解释成负权重</li>
+</ul>
+</li>
+<li class=" ml-8">字节序<ul class=" list-disc font-serif">
+<li class=" ml-8">cast 、union 问题</li>
+<li class=" ml-8">网络编程</li>
+</ul>
+</li>
+<li class=" ml-8">P.40  getpeername 的安全漏洞<ul class=" list-disc font-serif">
+<li class=" ml-8">arr[-1]</li>
+</ul>
+</li>
+</ul>
+</div> 
+</section>
+
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">整数运算</h1>
+</div> 
+</div> 
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">整数运算</h2>
+<p class=" font-serif my-1">整数加法</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">A+B = (A+B）mod （2**n）</li>
+</ul>
+<p class=" font-serif my-1">整数乘法</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">A*B = （A*B）mod （2**n）</li>
+</ul>
+<p class=" font-serif my-1">等价性</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">equivalence.c</li>
+<li class=" ml-8">无符号 有符号 的加法和乘法最终结果拥有位级等价性</li>
+<li class=" ml-8">共用加法器和乘法器, 但是符号位要单独算</li>
+</ul>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">整数运算</h2>
+<p class=" font-serif my-1">溢出问题  </p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">overflow.c</li>
+<li class=" ml-8">无符号溢出</li>
+<li class=" ml-8">有符号溢出</li>
+</ul>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="k">for</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"/>
+<span class="w">  </span><span class="c1">// it will be infinite loop</span>
+<span class="p">}</span><span class="w"/>
+
+<span class="c1">// sizeof(expr) will return a value of type size_t</span>
+<span class="c1">// the result type of operations on unsigned and signed numbers</span>
+<span class="c1">// will be unsigned</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">-</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">--</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"/>
+<span class="w">  </span><span class="c1">// it will be infinite loop</span>
+<span class="p">}</span><span class="w"/>
+</code></pre></div>
+
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">不同整数长度转换原则</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">conversion.c</li>
+<li class=" ml-8">相同长度无符号有符号转换原则<ul class=" list-disc font-serif">
+<li class=" ml-8">数值可能会改变，但是位模式不变</li>
+</ul>
+</li>
+<li class=" ml-8">
+<h6>扩展一个数字的位表示</h6>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">符号位扩展</li>
+<li class=" ml-8">截断</li>
+<li class=" ml-8">位模式不变，最高位根据补码解释成符号位</li>
+</ul>
+</li>
+</ul>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">整数习题</h2>
+<p class=" font-serif my-1"><img alt="image-20221015234424275" src=".\assets\image-20221015234424275.png"/></p>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">浮点数</h2>
+<blockquote>
+<p class=" font-serif my-1"><a href="https://www.bilibili.com/video/BV1iW411d7hd?p=4&amp;spm_id_from=pageDriver&amp;vd_source=23f4f9b0133a340ee6349d11dce79c5b&amp;t=880.3">引入 bias ，是为了直接将浮点数的位当做无符号整数直接进行比较，而没必要进行转换</a></p>
 </blockquote>
 <ul class=" list-disc font-serif">
-<li class=" ml-8">设置寄存器数值指令</li>
-<li class=" ml-8">计算指令 <ul class=" list-disc font-serif">
-<li class=" ml-8">加、减、乘、除等指令</li>
+<li class=" ml-8">cmp_float.c</li>
+<li class=" ml-8"><a href="https://tooltt.com/floatconverter/">二进制版本科学计数法</a><ul class=" list-disc font-serif">
+<li class=" ml-8">IEEE 754</li>
 </ul>
 </li>
-<li class=" ml-8">程序控制流指令<ul class=" list-disc font-serif">
-<li class=" ml-8">顺序</li>
-<li class=" ml-8">分支</li>
-<li class=" ml-8">循环</li>
+<li class=" ml-8">不满足结合律：大数吃小数 <ul class=" list-disc font-serif">
+<li class=" ml-8">overflow.c</li>
 </ul>
 </li>
-<li class=" ml-8">停机指令</li>
-</ul>
-</div> </section>
-
-<section> <div>
-<h2 class=" text-xl mt-2 pb-2 font-sans">指令集</h2>
-<p class=" font-serif my-1">寄存器</p>
-<table>
-<thead>
-<tr>
-<th>register</th>
-<th>Usage</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>x0</td>
-<td>特殊寄存器，永远是零</td>
-</tr>
-<tr>
-<td>x1</td>
-<td>通用寄存器</td>
-</tr>
-<tr>
-<td>x2</td>
-<td>通用寄存器</td>
-</tr>
-<tr>
-<td>x3</td>
-<td>通用寄存器</td>
-</tr>
-<tr>
-<td>PC</td>
-<td>用来记录当前要进行的指令, 不能直接访问</td>
-</tr>
-<tr>
-<td>cmp_r</td>
-<td>专门保存 cmp_greater 的结果, 不能直接访问</td>
-</tr>
-</tbody>
-</table>
-</div> </section>
-
-<section> <div>
-<h2 class=" text-xl mt-2 pb-2 font-sans">指令集</h2>
-<p class=" font-serif my-1">算数指令</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Meaning</th>
-<th style="text-align: center;">ASM</th>
-<th style="text-align: center;">Behavior</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">Addition with registers</td>
-<td style="text-align: center;">add   x1 x2 x3</td>
-<td style="text-align: center;">x3 = x1 + x2</td>
-</tr>
-<tr>
-<td style="text-align: left;">Addition with immediate , register</td>
-<td style="text-align: center;">addi  -8 x0 x3</td>
-<td style="text-align: center;">x3 = -8 + x0</td>
-</tr>
-</tbody>
-</table>
-<p class=" font-serif my-1">控制指令</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">ASM</th>
-<th style="text-align: left;">Behavior</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">cmp_greater x1 x2</td>
-<td style="text-align: left;">cmp_r = x1 &gt; x2 ? 1: 0</td>
-</tr>
-<tr>
-<td style="text-align: left;">jump_if_greater lable</td>
-<td style="text-align: left;">if (cmp_r) then PC = label_address</td>
-</tr>
-</tbody>
-</table>
-<p class=" font-serif my-1">停机指令</p>
-<ul class=" list-disc font-serif">
-<li class=" ml-8">halt</li>
-</ul>
-</div> </section>
-
-<section> <div>
-<h2 class=" text-xl mt-2 pb-2 font-sans">ASM example</h2>
-<p class=" font-serif my-1">在此基础上，我们希望这些指令能执行起来，虽然造不出来，但我们可以写个解释器执行这些指令</p>
-<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="nf">addi</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x2</span><span class="w"/>
-<span class="nf">addi</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x1</span><span class="w"/>
-<span class="nf">add</span><span class="w">  </span><span class="no">x1</span><span class="w"> </span><span class="no">x2</span><span class="w"> </span><span class="no">x3</span><span class="w"/>
-<span class="nf">halt</span><span class="w"/>
-</code></pre></div>
-
-</div>
-<div class="fragment" data-fragment-index="0"> <div>
-<p class=" font-serif my-1">但是我们无法观测到指令执行的结果，完全可以添加一条指令用于打印寄存器的值</p>
-</div> </div>
-<div class="fragment" data-fragment-index="1"> <div>
-<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="nf">addi</span><span class="w">   </span><span class="mi">2</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x1</span><span class="w"/>
-<span class="nf">addi</span><span class="w">  </span><span class="mi">-1</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x2</span><span class="w"/>
-<span class="nf">add</span><span class="w">   </span><span class="no">x1</span><span class="w"> </span><span class="no">x2</span><span class="w"> </span><span class="no">x3</span><span class="w"/>
-<span class="nf">print</span><span class="w"> </span><span class="no">x3</span><span class="w"/>
-<span class="nf">halt</span><span class="w"/>
-</code></pre></div>
-
-</div> </div> </section>
-
-<section> <div>
-<h2 class=" text-xl mt-2 pb-2 font-sans">Branch</h2>
-<p class=" font-serif my-1">现在只能顺序执行，条件跳转和循环如何实现？</p>
-</div>
-<div class="fragment" data-fragment-index="0"> <div>
-<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="nf">addi</span><span class="w">   </span><span class="mi">2</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x1</span><span class="w"/>
-<span class="nf">addi</span><span class="w">  </span><span class="mi">-1</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x2</span><span class="w"/>
-<span class="nf">addi</span><span class="w">   </span><span class="mi">0</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x3</span><span class="w"/>
-<span class="nf">cmp_greater</span><span class="w">   </span><span class="no">x1</span><span class="w"> </span><span class="no">x2</span><span class="w"/>
-<span class="nf">jump_if_great</span><span class="w"> </span><span class="err">@</span><span class="no">label</span><span class="w"/>
-<span class="nf">add</span><span class="w">   </span><span class="no">x1</span><span class="w"> </span><span class="no">x2</span><span class="w"> </span><span class="no">x3</span><span class="w"/>
-<span class="err">@</span><span class="nf">label</span><span class="w"/>
-<span class="nf">print</span><span class="w"> </span><span class="no">x3</span><span class="w"/>
-<span class="nf">halt</span><span class="w"/>
-</code></pre></div>
-
-</div> </div> </section>
-
-<section> <div>
-<h2 class=" text-xl mt-2 pb-2 font-sans">Loop</h2>
-<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="c1">; 1+2+3...+10</span>
-<span class="c1">; for(int x1 = 1; x1 &lt; 11; x1++) { x3 = x3 + x1 }</span>
-
-<span class="c1">; init</span>
-<span class="nf">addi</span><span class="w">   </span><span class="mi">1</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x1</span><span class="w"/>
-<span class="nf">addi</span><span class="w">  </span><span class="mi">11</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x2</span><span class="w"/>
-<span class="nf">addi</span><span class="w">   </span><span class="mi">0</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x3</span><span class="w"/>
-
-<span class="err">@</span><span class="nf">loop</span><span class="w"/>
-<span class="c1">; x3 = x1 + x3</span>
-<span class="nf">add</span><span class="w">   </span><span class="no">x1</span><span class="w"> </span><span class="no">x3</span><span class="w"> </span><span class="no">x3</span><span class="w"/>
-<span class="c1">; x1 = x1 + 1</span>
-<span class="nf">addi</span><span class="w">   </span><span class="mi">1</span><span class="w"> </span><span class="no">x1</span><span class="w"> </span><span class="no">x1</span><span class="w"/>
-
-<span class="nf">cmp_greater</span><span class="w">   </span><span class="no">x2</span><span class="w"> </span><span class="no">x1</span><span class="w"/>
-<span class="nf">jump_if_great</span><span class="w"> </span><span class="err">@</span><span class="no">loop</span><span class="w"/>
-<span class="nf">print</span><span class="w"> </span><span class="no">x3</span><span class="w"/>
-<span class="nf">halt</span><span class="w"/>
-</code></pre></div>
-
-</div> </section>
-
-<section> <div>
-<h2 class=" text-xl mt-2 pb-2 font-sans">寄存器数量不够用?</h2>
-<p class=" font-serif my-1">新增访存指令</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">ASM</th>
-<th style="text-align: center;">Behavior</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">load r1 r2</td>
-<td style="text-align: center;">r2 = mem[r1]</td>
-</tr>
-<tr>
-<td style="text-align: center;">write r1 r2</td>
-<td style="text-align: center;">mem[r2] = reg</td>
-</tr>
-</tbody>
-</table>
-</div> </section>
-
-<section> <div>
-<h2 class=" text-xl mt-2 pb-2 font-sans">函数调用</h2>
-<p class=" font-serif my-1">要解决以下几个问题</p>
-<ol>
-<li class=" ml-8">如何传递函数的参数</li>
-<li class=" ml-8">如何跳转其他函数</li>
-<li class=" ml-8">函数内部变量如何放置</li>
-<li class=" ml-8">函数的返回值如何传递</li>
-<li class=" ml-8">如何返回原来的函数继续执行</li>
-</ol>
-<p class=" font-serif my-1">2 和 5 这两件事情凭现在的指令是做不了的<br/>
-对于 3 需要其他的空间储存相应的变量<br/>
-1 和 4 则需要人为约定</p>
-<p class=" font-serif my-1">大多数子程序的使用基本满足先进后出的原则</p>
-<ul class=" list-disc font-serif">
-<li class=" ml-8">子程序中局部变量</li>
-<li class=" ml-8">子程序的返回地址等</li>
-</ul>
-</div> </section>
-
-<section> <div>
-<h2 class=" text-xl mt-2 pb-2 font-sans">新增对PC的操作指令</h2>
-<p class=" font-serif my-1">call 指令</p>
-<ol>
-<li class=" ml-8">将 call 指令的下一条地址存在某个地方</li>
-<li class=" ml-8">pc 设置为要跳转的函数</li>
-</ol>
-<p class=" font-serif my-1">ret 指令</p>
-<ul class=" list-disc font-serif">
-<li class=" ml-8">将 pc 设置刚才保存的值</li>
-</ul>
-</div>
-<div class="fragment" data-fragment-index="0"> <div>
-<p class=" font-serif my-1">push 指令</p>
-<ol>
-<li class=" ml-8">addi -1 sp sp</li>
-<li class=" ml-8">write reg adr</li>
-</ol>
-<p class=" font-serif my-1">pop  指令</p>
-<ol>
-<li class=" ml-8">load addr reg</li>
-<li class=" ml-8">addi 1 sp sp</li>
-</ol>
-</div> </div> </section>
-
-<section> <div>
-<h2 class=" text-xl mt-2 pb-2 font-sans">新增对PC的操作指令</h2>
-<ul class=" list-disc font-serif">
-<li class=" ml-8">push pc + 1</li>
-<li class=" ml-8">jump @label</li>
-</ul>
-<p class=" font-serif my-1">ret 指令</p>
-<ul class=" list-disc font-serif">
-<li class=" ml-8">pop pc</li>
-</ul>
-<p class=" font-serif my-1">但是并不是所有的指令集都是这样的行为</p>
-</div> </section>
-
-<section> <div>
-<h2 class=" text-xl mt-2 pb-2 font-sans">递归程序</h2>
-<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">                                      </span>
-<span class="w">    </span><span class="c1">// x1 &lt; 2                                      </span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">x1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="w">                                       </span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">x2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x1</span><span class="w"/>
-<span class="w">    </span><span class="n">x1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">add</span><span class="p">(</span><span class="n">x1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">                                     </span>
-<span class="w">    </span><span class="n">x1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x1</span><span class="w">                                      </span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">x1</span><span class="w">                                       </span>
-<span class="p">}</span><span class="w">                                      </span>
-</code></pre></div>
-
-</div>
-<div class="fragment" data-fragment-index="0"> <div>
-<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="nf">addi</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="no">x0</span><span class="w">                      </span><span class="no">push</span><span class="w"> </span><span class="no">x1</span><span class="w"/>
-<span class="nf">call</span><span class="w"> </span><span class="err">@</span><span class="no">add</span><span class="w">                       </span><span class="no">addi</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="no">x1</span><span class="w"> </span><span class="no">x1</span><span class="w"/>
-<span class="nf">print</span><span class="w"> </span><span class="no">x1</span><span class="w">                        </span><span class="no">call</span><span class="w"> </span><span class="err">@</span><span class="no">add</span><span class="w"/>
-<span class="nf">halt</span><span class="w">                            </span><span class="no">pop</span><span class="w"> </span><span class="no">x2</span><span class="w"> </span>
-<span class="w">                                </span><span class="no">add</span><span class="w"> </span><span class="no">x1</span><span class="w"> </span><span class="no">x2</span><span class="w"> </span><span class="no">x1</span><span class="w"/>
-<span class="err">@</span><span class="nf">add</span><span class="w">                            </span>
-<span class="no">addi</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x2</span><span class="w">                    </span><span class="err">@</span><span class="no">return</span><span class="w"> </span>
-<span class="no">cmp_greater</span><span class="w"> </span><span class="no">x2</span><span class="w"> </span><span class="no">x1</span><span class="w">               </span><span class="no">ret</span><span class="w"> </span>
-<span class="no">jump_if_greater</span><span class="w"> </span><span class="err">@</span><span class="no">return</span><span class="w">   </span>
-</code></pre></div>
-
-</div> </div> </section>
-
-<section> <div>
-<p class=" font-serif my-1">这种传参的人为约定有一套标准称为 <a href="https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf">ABI</a> </p>
-<p class=" font-serif my-1">现在还缺了点什么呢？</p>
-<ul class=" list-disc font-serif">
-<li class=" ml-8">多字节数据的支持</li>
-<li class=" ml-8">其他的分支指令(equal .etc)</li>
-<li class=" ml-8">相对地址的跳转<ul class=" list-disc font-serif">
-<li class=" ml-8">此外，还有一个问题, jump 是基于绝对地址。这对后来的动态加载会有问题，我们需要一个基于 PC 的相对跳转</li>
-</ul>
-</li>
-<li class=" ml-8">对于全局变量是手动管理，需要清楚内存的布局</li>
-</ul>
-</div> </section> 
-</section>
-
-<section>
- <div>
-<h2 class=" text-xl mt-2 pb-2 font-sans">过去的处理器</h2>
-<ul class=" list-disc font-serif">
-<li class=" ml-8"><a href="https://www.nesdev.org/obelisk-6502-guide/reference.html">6502 手册</a></li>
+<li class=" ml-8">浮点数比较  abs(a - b) &lt; 0.0001</li>
+<li class=" ml-8">数值分析</li>
 </ul>
 </div> 
 </section>
 
 <section>
  <div>
-<h2 class=" text-xl mt-2 pb-2 font-sans">现在处理器</h2>
+<h2 class=" text-xl mt-2 pb-2 font-sans">浮点数</h2>
+<p class=" font-serif my-1"><img alt="image-20221029164539082" src=".\assets\image-20221029164539082.png"/></p>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">浮点数习题</h2>
+<p class=" font-serif my-1"><img alt="image-20221015234346416" src=".\assets\image-20221015234346416.png"/></p>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">语言运算操作</h2>
+<p class=" font-serif my-1">位级操作</p>
 <ul class=" list-disc font-serif">
-<li class=" ml-8"><a href="https://www.intel.cn/content/www/cn/zh/architecture-and-technology/64-ia-32-architectures-software-developer-vol-1-manual.html">x86</a></li>
-<li class=" ml-8"><a href="https://github.com/riscv/riscv-isa-manual">risc-v</a></li>
+<li class=" ml-8">与运算： 二进制截断  1111 1001 &amp; 1111 0000 = 1111 0000</li>
+<li class=" ml-8">或运算： 二进制组合  1111 0000  |  0000 1111 = 1111 1111</li>
+<li class=" ml-8">异或运算：无进位加法 1111 0000  ^ 0001 1100 = 1110 1100</li>
+<li class=" ml-8"><a href="http://graphics.stanford.edu/~seander/bithacks.html">位运算的奇淫技巧</a></li>
+<li class=" ml-8"><a href="https://fengmuzi2003.gitbook.io/csapp3e/di-er-zhang-zhong-dian-jie-du">其他方面</a></li>
+</ul>
+<p class=" font-serif my-1">移位操作 </p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">shift.c</li>
+<li class=" ml-8">C 对于有符号数右移是 UB，大多数编译器实现为算术右移</li>
+<li class=" ml-8">逻辑右移</li>
+<li class=" ml-8">算术右移</li>
 </ul>
 </div> 
 </section>
 
 <section>
  <div>
-<h2 class=" text-xl mt-2 pb-2 font-sans">其他方面</h2>
-<p class=" font-serif my-1"><a href="https://www.bilibili.com/video/BV1p34y1a7FH/">读懂变量名</a></p>
-<p class=" font-serif my-1">https://en.wikipedia.org/wiki/Skylake_(microarchitecture)</p>
-<p class=" font-serif my-1">https://pythontutor.com/</p>
+<h2 class=" text-xl mt-2 pb-2 font-sans">语言运算操作</h2>
+<p class=" font-serif my-1">短路求值 </p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">short_circuit_evaluation.c</li>
+<li class=" ml-8"><code>gcc short_circuit_evaluation.c &amp;&amp; ./a.out</code>  不会报错</li>
+<li class=" ml-8">空指针访问： <code>p &amp;&amp; *p</code></li>
+<li class=" ml-8">类中函数访问  <code>A.fun &amp;&amp; A.fun()</code></li>
+</ul>
+<p class=" font-serif my-1">其他软件</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://valgrind.org/docs/manual/manual.html">valgrind</a></li>
+</ul>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">其他语言实现</h2>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code>// 9007万亿
+a = 2**53 + 3
+
+a = 2147483648
+-a = (~a+1)
+</code></pre></div>
+
+<ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Bitwise_NOT">js</a><ul class=" list-disc font-serif">
+<li class=" ml-8">number 类型实现</li>
+</ul>
+</li>
+<li class=" ml-8">python</li>
+</ul>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">相关链接</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://0xffff.one/d/684-cmucsapp-2015-cmu-15213-csapp-zi/13">论坛内帖子</a></li>
+<li class=" ml-8"><a href="https://www.bilibili.com/video/BV1RK4y1R7Kf/?spm_id_from=333.337.search-card.all.click">csapp 重点导读</a><ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://fengmuzi2003.gitbook.io/csapp3e/">相关帖子</a></li>
+</ul>
+</li>
+<li class=" ml-8"><a href="https://space.bilibili.com/4564101/video">B站硬核讲解</a></li>
+</ul>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">字符怎么显示出来？</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://www.quora.com/How-does-a-computer-display-characters">quora的回答</a></li>
+<li class=" ml-8"><a href="https://www.bilibili.com/video/BV1YS4y1Z7Ed/">点阵字体打印实现</a></li>
+</ul>
 </div> 
 </section>
     </div>
