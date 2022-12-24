@@ -252,18 +252,45 @@
 <h2 class=" text-xl mt-2 pb-2 font-sans">虚拟内存页表设计</h2>
 <p class=" font-serif my-1">原理是维护一个虚拟内存到物理内存的映射</p>
 <ul class=" list-disc font-serif">
+<li class=" ml-8">哈希表</li>
+<li class=" ml-8">多级固定页表(tree-based address translation)<ul class=" list-disc font-serif">
 <li class=" ml-8">建立索引</li>
 <li class=" ml-8">建立索引的索引</li>
+<li class=" ml-8"><a href="https://www.kernel.org/doc/html/latest/admin-guide/mm/hugetlbpage.html">huge pages</a> (2MB, 1G)</li>
 </ul>
-<p class=" font-serif my-1">查找过程</p>
+</li>
+</ul>
+<p class=" font-serif my-1">查找过程(P.41)</p>
 <ul class=" list-disc font-serif">
 <li class=" ml-8">page table walk</li>
 </ul>
-<p class=" font-serif my-1">硬件加速单元-MMU</p>
+</div> </section>
+
+<section> <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">cache</h2>
 <ul class=" list-disc font-serif">
-<li class=" ml-8"><a href="https://www.cs.cmu.edu/afs/cs.cmu.edu/user/tcm/www/thesis/subsubsection2_10_1_2_1.html#SECTION00101210000000000000">TLB</a></li>
-<li class=" ml-8"><a href="https://news.ycombinator.com/item?id=25257932">why m1 so fast</a></li>
+<li class=" ml-8">TLB</li>
+<li class=" ml-8">L1, L2, L3</li>
 </ul>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code>$ cpuid <span class="p">|</span> grep -i cache
+</code></pre></div>
+
+<p class=" font-serif my-1"><img alt="" src="./assets/cache.png"/></p>
+</div> </section>
+
+<section> <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">TLB 相关问题</h2>
+<p class=" font-serif my-1">TLB 会不够用吗？</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">prefetch</li>
+<li class=" ml-8">L1 hidden latency </li>
+</ul>
+<p class=" font-serif my-1">process switch 带来的问题</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">flush TLB</li>
+<li class=" ml-8"><a href="https://stackoverflow.com/questions/52813239/how-many-bits-there-are-in-a-tlb-asid-tag-for-intel-processors-and-how-to-handl">tagged TLB(ASID)</a></li>
+</ul>
+<p class=" font-serif my-1">还有其他问题: cache management, cache coherence .etc</p>
 </div> </section>
 
 <section> <div>
@@ -271,9 +298,10 @@
 <ul class=" list-disc font-serif">
 <li class=" ml-8">物理内存多时: prefetch(投机)</li>
 <li class=" ml-8">物理内存少时: swap</li>
-<li class=" ml-8">内存保护</li>
+<li class=" ml-8">内存保护 (P.18)</li>
 <li class=" ml-8">链接和加载更容易 </li>
-<li class=" ml-8">按需分配</li>
+<li class=" ml-8">按需分配(COW)</li>
+<li class=" ml-8">实现 <a href="https://eli.thegreenplace.net/2011/01/27/how-debuggers-work-part-2-breakpoints">watch point</a></li>
 </ul>
 <div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code>$ gcc mmap-alloc.c <span class="o">&amp;&amp;</span> ./a.out
 </code></pre></div>
@@ -281,11 +309,21 @@
 </div> </section>
 
 <section> <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Memory Copy</h2>
+<p class=" font-serif my-1">内核与空间交互数据需要进行数据的拷贝
+<img alt="" src="./assets/memory_copy.png"/></p>
+</div> </section>
+
+<section> <div>
 <h2 class=" text-xl mt-2 pb-2 font-sans">Memory-Mapping</h2>
+<p class=" font-serif my-1">没有中间商赚差价</p>
 <ul class=" list-disc font-serif">
 <li class=" ml-8">映射文件</li>
-<li class=" ml-8">映射设备</li>
-<li class=" ml-8">映射内核页</li>
+<li class=" ml-8">映射设备<ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://docs.kernel.org/networking/packet_mmap.html">Packet MMAP</a></li>
+</ul>
+</li>
+<li class=" ml-8">进程间共享内存</li>
 </ul>
 </div> </section> 
 </section>
@@ -295,7 +333,7 @@
 <h2 class=" text-xl mt-2 pb-2 font-sans">内存分配</h2>
 <ul class=" list-disc font-serif">
 <li class=" ml-8">链表</li>
-<li class=" ml-8">bitmap</li>
+<li class=" ml-8">fixed page pool</li>
 <li class=" ml-8">伙伴系统</li>
 </ul>
 </div> 
@@ -303,10 +341,17 @@
 
 <section>
  <div>
-<h2 class=" text-xl mt-2 pb-2 font-sans"><a href="https://book.douban.com/subject/26821357/">Garbage Collect</a></h2>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Garbage Collect</h2>
 <ul class=" list-disc font-serif">
-<li class=" ml-8">reference conuting </li>
+<li class=" ml-8">reference conuting<ul class=" list-disc font-serif">
+<li class=" ml-8">COW</li>
+</ul>
+</li>
 <li class=" ml-8">mark sweep</li>
+</ul>
+<p class=" font-serif my-1">参考书籍</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://book.douban.com/subject/26821357/">垃圾回收的算法与实现</a></li>
 </ul>
 </div> 
 </section>
