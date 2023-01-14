@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="../static/css/base.css" rel="stylesheet">
+    <link href="../static/css/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.font.im/css?family=Source+Serif+Pro%7CLato%7CInconsolata" rel="stylesheet"
+          type="text/css">
+    <title>CSAPP 讨论会</title>
+    <!--    browser favicon-->
+    <link rel="shortcut icon" href="https://cdn-0x4f.do3ob.cn/assets/favicon-gggj2dbz.png">
+    <style>
+        .font-sans {
+            font-family: 'Lato', 'SimHei', 'STHeiti', 'SimHei', 'Serif';
+        }
+
+        .font-serif {
+            font-family: 'Source Serif Pro', 'Songti SC', 'SimSun', 'Serif', serif;
+        }
+    </style>
+    <link rel="stylesheet" href="../static/katex/katex.min.css">
+    <script defer src="../static/katex/katex.min.js"></script>
+<!--    <script defer src="../static/katex/auto-render.min.js"-->
+<!--            integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"-->
+<!--            crossorigin="anonymous"></script>-->
+    <script defer src="../static/katex/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // &#8226; auto-render specific keys, e.g.:
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true }
+                ],
+                // &#8226; rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+
+
+    <link rel="stylesheet" href="../static/reveal/reveal.css">
+    <link rel="stylesheet" href="../static/reveal/theme/simple.css" id="theme">
+
+    <style>
+        .reveal .slide-number {
+            font-size: 26px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, .3);
+        }
+
+        .reveal .slides {
+            border: 1.5px #ddd solid;
+            border-radius: 7px;
+            text-align: left;
+            font-weight: 300;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4 {
+            font-family: 'Lato', 'SimHei', 'STXihei', 'Sans Serif';
+            font-weight: 400;
+        }
+
+        .reveal p,
+        .reveal li,
+        .reveal center {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+        }
+
+        .reveal li+li {
+            margin-top: 10px;
+        }
+
+        .reveal ul {
+            display: block;
+            margin-right: 15px;
+        }
+
+        .reveal p,
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5 {
+            padding: 0 25px 0 25px;
+        }
+
+        .reveal table {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .reveal th {
+            background-color: #eee;
+        }
+
+        .reveal tr:nth-child(even) {
+            background-color: #efffff;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5,
+        .reveal h6 {
+            text-align: left;
+            margin: 0 0 20px 0;
+            color: #222;
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: normal;
+        }
+
+
+
+        .reveal h1 {
+            margin: 0 10 0 10;
+            font-size: 60px;
+        }
+
+        .reveal .middle h1 {
+            text-align: center;
+        }
+
+        .reveal h2 {
+            font-size: 48px;
+            border-bottom: 2px solid rgb(106, 0, 95);
+            padding-bottom: 5px;
+        }
+
+        .reveal h3 {
+            font-size: 1.15em;
+        }
+
+        .reveal h4 {
+            font-size: 1.05em;
+        }
+
+        .reveal .center {
+            text-align: center;
+        }
+
+        .reveal .middle {
+            height: 728px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .reveal pre {
+            font-size: 28px;
+
+            background-color: #eee;
+
+            border-radius: 3mm;
+            padding: 10px 10px 10px 10px;
+        }
+
+        .reveal pre code {
+            max-height: none;
+        }
+
+        .reveal code {
+            font-family: 'Inconsolata', 'STKaiti', 'KaiTi', 'Sans Serif', Monospace;
+        }
+
+        .reveal .middle blockquote {
+            text-align: center;
+            color: rgb(106, 0, 95);
+            background: none;
+            box-shadow: none;
+        }
+
+        .reveal .middle blockquote a {
+            color: inherit;
+        }
+
+        .reveal blockquote p,
+        .reveal blockquote li {
+            font-family: 'Lato', 'STKaiti', 'KaiTi', 'Sans Serif';
+        }
+
+        section .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .reveal .author-block {
+            margin: 75px 0 35px 0;
+        }
+
+        .reveal .author-affiliation img {
+            margin: 15px 0 0 0;
+        }
+
+        .reveal .author-block p,
+        .reveal .author-affiliation p {
+            font-family: 'Kaiti', 'STKaiti', 'Serif', 'Times', 'Times New Roman';
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+        }
+
+        .reveal .author-affiliation {
+            display: inline-block;
+            font-size: 90%;
+        }
+
+        .reveal hr {
+            border: 10px solid rgba(0, 0, 0, 0);
+        }
+
+        .reveal li {
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+
+<body class="d-flex flex-column h-100">
+
+
+
+<div class="reveal">
+    <div class="slides">
+        <section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">CSAPP 讨论会</h1>
+<p class=" font-serif my-1">Week6 并发编程<br/>
+2023/1/14</p>
+</div> 
+</div> 
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">并发编程要处理的问题</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">通信: 基于共享内存 或 基于消息传递</li>
+<li class=" ml-8">同步: 各个逻辑之间的前后依赖关系<ul class=" list-disc font-serif">
+<li class=" ml-8">自旋(忙等待)</li>
+<li class=" ml-8">阻塞(sleep)</li>
+</ul>
+</li>
+</ul>
+<p class=" font-serif my-1">基于共享内存的同步问题：对资源的操作不是原子性</p>
+<p class=" font-serif my-1">竞态条件成立的三个条件</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">两个线程共享数据</li>
+<li class=" ml-8">至少一个处理会对数据进行修改</li>
+<li class=" ml-8">一个处理未完成之前，另一个介入进来(中间态被打断)</li>
+</ul>
+<p class=" font-serif my-1">从时间维度上来看, 对资源的操作要保证互斥: 数据的修改操作有且仅有一个程序在活动</p>
+</div> 
+</section>
+
+<section>
+ 
+<section> <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">共享内存同步</h2>
+<p class=" font-serif my-1">通过 flag 来判断是否有线程对资源的操作，而对 flag 的操作也必须满足原子性，硬件指令来保障 ---&gt; pthread_mutex (futex)</p>
+<p class=" font-serif my-1">往下一步: 编程需要更方便的指令<br/>
+condition variable, semaphore(信号量)</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="kt">void</span><span class="w"> </span><span class="nf">producer</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"/>
+<span class="w">    </span><span class="n">P</span><span class="p">(</span><span class="o">&amp;</span><span class="n">empty</span><span class="p">);</span><span class="w">   </span>
+<span class="w">    </span><span class="c1">// do sth 假设线程安全</span>
+<span class="w">    </span><span class="n">V</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fill</span><span class="p">);</span><span class="w"/>
+<span class="p">}</span><span class="w"/>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">consumer</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"/>
+<span class="w">    </span><span class="n">P</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fill</span><span class="p">);</span><span class="w"/>
+<span class="w">    </span><span class="c1">// do sth 假设线程安全</span>
+<span class="w">    </span><span class="n">V</span><span class="p">(</span><span class="o">&amp;</span><span class="n">empty</span><span class="p">);</span><span class="w"/>
+<span class="p">}</span><span class="w"/>
+</code></pre></div>
+
+</div> </section>
+
+<section> <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">针对业务场景特定性的优化</h2>
+<p class=" font-serif my-1">读读</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">不需要上锁</li>
+</ul>
+<p class=" font-serif my-1">写写</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">必须保证写的顺序性</li>
+<li class=" ml-8"><red>Solution:</red>拆分数据, 线程各自计算(私有数据不需要上锁)，最后再合并(上锁同步)</li>
+</ul>
+<p class=" font-serif my-1">读写</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">要么只能看到修改前的数据</li>
+<li class=" ml-8">要么只能看到全部修改后的数据</li>
+<li class=" ml-8">不能看到修改的中间态</li>
+</ul>
+</div> </section>
+
+<section> <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">针对业务场景特定性的优化</h2>
+<p class=" font-serif my-1">锁的变体</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">读写锁</li>
+<li class=" ml-8">RCU 锁</li>
+<li class=" ml-8">MCS 锁</li>
+</ul>
+</div> </section>
+
+<section> <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">事务内存</h2>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="n">atom</span><span class="w"> </span><span class="p">{</span><span class="w"/>
+<span class="w">    </span><span class="c1">// operate(read or write) data code</span>
+<span class="p">}</span><span class="w"/>
+</code></pre></div>
+
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="n">loop</span><span class="p">:</span>
+    <span class="n">data_before</span> <span class="o">:=</span> <span class="n">data</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="o">//</span> <span class="n">operate</span> <span class="n">data</span> <span class="n">code</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">equal</span><span class="p">(</span><span class="n">data_before</span><span class="p">,</span> <span class="n">data_after</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">error</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">commit</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">discard</span> <span class="n">data_after</span>
+        <span class="n">goto</span> <span class="n">loop</span>
+</code></pre></div>
+
+<p class=" font-serif my-1"><a href="https://www.bilibili.com/video/BV1tY411274s?t=672.7]">monitor(管程)</a></p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">通用的并发编程方法</li>
+</ul>
+</div> </section> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">其他方面</h2>
+<p class=" font-serif my-1">以上这些都是 data in share memory 所带来的问题<br/>
+换种思路: inform data changes by sharing memory</p>
+<p class=" font-serif my-1">函数式</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">
+<p class=" font-serif my-1">同步: future/promise</p>
+</li>
+<li class=" ml-8">
+<p class=" font-serif my-1">消息传递</p>
+</li>
+<li class=" ml-8">
+<p class=" font-serif my-1">asynchronous(异步) + 单线程执行</p>
+</li>
+</ul>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">其他方面</h2>
+<p class=" font-serif my-1">编译器隐藏依赖假设</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">单线程模型编译</li>
+</ul>
+<p class=" font-serif my-1">我们的 CPU 也是一个编译器  </p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://research.swtch.com/hwmm">保证了单线程程序的正确性</a>  </li>
+<li class=" ml-8">同步原语: fence 指令</li>
+</ul>
+</div> 
+</section>
+    </div>
+</div>
+<script src="../static/reveal/reveal.js"></script>
+<script>
+    Reveal.initialize({
+
+        width: 1024, height: 768,
+
+        slideNumber: 'c/t',
+        controlsTutorial: false,
+        progress: false,
+        hash: true,
+        center: false,
+        autoAnimateUnmatched: true,
+        autoAnimateEasing: 'ease-out',
+        autoAnimateDuration: 0.3,
+        transitionSpeed: 'fast'
+    });
+</script>
+</body>
+</html>
